@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shqiponja Telhaj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,600;1,500&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EF;
+    --surface:#FCFBF7;
+    --ink:#262220;
+    --ink-muted:#6B645C;
+    --ink-faint:#948C7F;
+    --line:#DDD7C9;
+    --accent:#7C2D2D;
+    --accent-ink:#FFFFFF;
+    --oak:#3F5A44;
+    --oak-soft:#E8EDE6;
+    --accent-soft:#F3E4E1;
+    --shadow: 0 1px 2px rgba(38,34,32,0.06), 0 8px 24px rgba(38,34,32,0.05);
+    --hero-band:#4C5578;
+    --hero-card:#F1EFEA;
+    --hero-mark:#3452C4;
+    --hero-mark-ink:#FFFFFF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1B1917;
+      --surface:#242019;
+      --ink:#ECE8E1;
+      --ink-muted:#A79D8F;
+      --ink-faint:#7D766A;
+      --line:#3A362E;
+      --accent:#E0938C;
+      --accent-ink:#211412;
+      --oak:#8FB894;
+      --oak-soft:#26302A;
+      --accent-soft:#332321;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+      --hero-band:#31374F;
+      --hero-card:#242019;
+      --hero-mark:#4A69D6;
+      --hero-mark-ink:#FFFFFF;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1B1917;
+    --surface:#242019;
+    --ink:#ECE8E1;
+    --ink-muted:#A79D8F;
+    --ink-faint:#7D766A;
+    --line:#3A362E;
+    --accent:#E0938C;
+    --accent-ink:#211412;
+    --oak:#8FB894;
+    --oak-soft:#26302A;
+    --accent-soft:#332321;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    --hero-band:#31374F;
+    --hero-card:#242019;
+    --hero-mark:#4A69D6;
+    --hero-mark-ink:#FFFFFF;
+  }
+
+  @font-face{
+    font-family:'sys-fallback';
+    src:local('Georgia');
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+    font-size:16.5px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Newsreader', Georgia, 'sys-fallback', serif;
+    font-weight:600;
+    color:var(--ink);
+    text-wrap:balance;
+    margin:0;
+  }
+
+  a{ color:var(--accent); text-decoration-thickness:1px; text-underline-offset:2px; }
+  a:hover{ text-decoration-thickness:2px; }
+  a:focus-visible, button:focus-visible, summary:focus-visible{
+    outline:2px solid var(--accent); outline-offset:3px; border-radius:2px;
+  }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', ui-monospace, monospace;
+    font-size:0.72rem;
+    letter-spacing:0.11em;
+    text-transform:uppercase;
+    color:var(--oak);
+  }
+
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; }
+
+  .wrap{ max-width:1040px; margin:0 auto; padding:0 28px; }
+  .prose{ max-width:740px; }
+
+  /* ---------- nav ---------- */
+  .topnav{
+    position:sticky; top:0; z-index:20;
+    background:var(--surface);
+    border-bottom:1px solid var(--line);
+  }
+  .topnav .wrap{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    height:104px; gap:20px; padding-top:18px;
+  }
+  .brand{
+    font-family:'Newsreader', serif; font-weight:500; font-size:1.6rem;
+    color:var(--ink); text-decoration:none; white-space:nowrap;
+    align-self:flex-start;
+  }
+  .navlinks{ display:flex; gap:34px; overflow-x:auto; scrollbar-width:none; padding-bottom:6px; }
+  .navlinks::-webkit-scrollbar{ display:none; }
+  .navlinks a{
+    color:var(--ink-muted); text-decoration:none; font-size:0.78rem;
+    text-transform:uppercase; letter-spacing:0.08em;
+    white-space:nowrap; padding:4px 2px; border-bottom:2px solid transparent;
+  }
+  .navlinks a:hover{ color:var(--ink); border-bottom-color:var(--oak); }
+
+  /* ---------- leaf divider ---------- */
+  .leaf-divider{ display:flex; align-items:center; gap:14px; margin:0 0 30px; color:var(--ink-faint); }
+  .leaf-divider .rule{ flex:1; height:1px; background:var(--line); }
+  .leaf-divider svg{ width:16px; height:16px; flex:none; }
+
+  /* ---------- hero ---------- */
+  .page{ display:none; }
+  .page.active{ display:block; }
+  .navlinks a.active{ color:var(--ink); }
+  .navlinks a.active::after{ content:''; display:block; height:2px; background:var(--oak); margin-top:4px; }
+  .hero{ background:var(--hero-band); padding:64px 0 120px; }
+  .hero-card{
+    background:var(--hero-card);
+    max-width:980px; margin:0 auto;
+    padding:40px 44px;
+    display:flex; align-items:center; justify-content:space-between; gap:40px;
+    box-shadow:var(--shadow);
+  }
+  .hero-text{ flex:1; min-width:0; }
+  .job-title{
+    font-family:'Source Sans 3', sans-serif;
+    letter-spacing:0.03em; text-transform:uppercase;
+    color:var(--ink); font-size:1.05rem; font-weight:700;
+    margin:0 0 14px;
+  }
+  .affil-line{ margin:0; font-size:1.05rem; line-height:1.6; color:var(--ink-muted); }
+  .affil-line .mark{ background:none; color:inherit; padding:0; }
+  .hero-photo{
+    width:150px; height:196px; flex:none;
+    object-fit:cover; display:block;
+    box-shadow:var(--shadow);
+  }
+  @media (max-width:640px){
+    .hero-card{ flex-direction:column-reverse; padding:30px; text-align:left; }
+  }
+  .badge{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--accent-soft); color:var(--accent);
+    border:1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    padding:6px 12px 6px 10px; border-radius:999px;
+    font-size:0.84rem; font-weight:600; margin-bottom:16px;
+  }
+  .badge svg{ width:14px; height:14px; flex:none; }
+  .contact-row{ display:flex; flex-wrap:wrap; gap:8px 22px; font-size:0.92rem; color:var(--ink-muted); margin-bottom:22px; }
+  .contact-row a{ color:var(--ink); }
+
+  /* ---------- sections ---------- */
+  section{ padding:52px 0; }
+  section + section{ border-top:1px solid var(--line); }
+  .section-head{ margin-bottom:28px; }
+  .section-head h2{ font-size:1.7rem; margin-bottom:6px; }
+  .section-head p{ color:var(--ink-muted); margin:0; max-width:620px; }
+
+  .lede{ font-size:1.12rem; color:var(--ink); }
+  .lede + p{ color:var(--ink-muted); }
+
+  /* ---------- timeline ---------- */
+  .tl{ list-style:none; margin:0; padding:0; }
+  .tl li{
+    display:grid; grid-template-columns:120px 1fr; gap:18px;
+    padding:12px 0; border-top:1px solid var(--line);
+  }
+  .tl li:first-child{ border-top:none; }
+  .tl .when{ color:var(--oak); font-size:0.85rem; padding-top:2px; }
+  .tl .what strong{ font-weight:600; }
+  .tl .what span.sub{ color:var(--ink-muted); font-size:0.92rem; }
+
+  /* ---------- cards / lists ---------- */
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:20px 22px; box-shadow:var(--shadow);
+  }
+  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:760px){ .grid-2{ grid-template-columns:1fr; } .hero-grid{ grid-template-columns:1fr; text-align:left; } }
+
+  .pub-group{ margin-bottom:34px; }
+  .pub-group h3{ font-size:1.05rem; margin-bottom:14px; display:flex; align-items:baseline; gap:10px; }
+  .pub-group h3 .count{ font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:var(--ink-faint); font-weight:400; }
+  .pub{ padding:13px 0; border-top:1px solid var(--line); }
+  .pub:first-child{ border-top:none; }
+  .pub .num{ color:var(--oak); font-family:'IBM Plex Mono',monospace; font-size:0.82rem; margin-right:8px; }
+  .pub .cite{ color:var(--ink); }
+  .pub .cite em{ font-style:italic; color:var(--ink); }
+  .pub .cite .yr{ color:var(--ink-muted); }
+  .pub .impact{ margin:6px 0 0 24px; color:var(--ink-muted); font-size:0.88rem; }
+  .pub .impact li{ margin-bottom:2px; }
+
+  .policy-item{ display:grid; grid-template-columns:96px 1fr; gap:16px; padding:14px 0; border-top:1px solid var(--line); }
+  .policy-item:first-child{ border-top:none; }
+  .policy-item .yr{ color:var(--oak); font-size:0.85rem; }
+  .policy-item .role{ font-weight:600; }
+
+  .honour-item{ display:flex; gap:14px; padding:16px 0; border-top:1px solid var(--line); }
+  .honour-item:first-child{ border-top:none; }
+  .honour-item svg{ width:18px; height:18px; flex:none; margin-top:3px; color:var(--oak); }
+  .honour-item .yr{ font-family:'IBM Plex Mono',monospace; font-size:0.78rem; color:var(--ink-faint); display:block; margin-bottom:2px; }
+  .honour-item.featured{ background:var(--oak-soft); margin:0 -22px 6px; padding:18px 22px; border-radius:10px; border-top:none; }
+  .honour-item.featured svg{ color:var(--oak); }
+
+  details{ border-top:1px solid var(--line); padding:14px 0; }
+  details:first-of-type{ border-top:none; }
+  summary{
+    cursor:pointer; font-weight:600; list-style:none; display:flex; align-items:center; gap:8px;
+    color:var(--ink);
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary .chev{ transition:transform 0.15s ease; color:var(--oak); font-size:0.8rem; }
+  details[open] summary .chev{ transform:rotate(90deg); }
+  .tag-cloud{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .tag{
+    font-size:0.82rem; padding:4px 10px; border:1px solid var(--line); border-radius:999px;
+    color:var(--ink-muted); background:var(--surface);
+  }
+  .seminar-list{ columns:2; column-gap:32px; margin-top:14px; }
+  @media (max-width:700px){ .seminar-list{ columns:1; } }
+  .seminar-list p{ margin:0 0 10px; font-size:0.9rem; color:var(--ink-muted); break-inside:avoid; }
+  .seminar-list p strong{ color:var(--ink); font-weight:600; }
+
+  .link-list{ list-style:none; margin:0; padding:0; }
+  .link-list li{ padding:6px 0; border-top:1px solid var(--line); font-size:0.92rem; }
+  .link-list li:first-child{ border-top:none; }
+
+  footer{ padding:40px 0 60px; }
+  footer .wrap{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:24px; color:var(--ink-muted); font-size:0.88rem; }
+  footer a{ color:var(--ink-muted); }
+  footer a:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="#home">Shqiponja Telhaj</a>
+    <div class="navlinks">
+      <a href="#home" data-page="home">Home</a>
+      <a href="#research" data-page="research">Research</a>
+      <a href="#policy" data-page="policy">Policy</a>
+      <a href="#honours" data-page="honours">Honours &amp; Service</a>
+      <a href="#teaching" data-page="teaching">Teaching</a>
+      <a href="#speaking" data-page="speaking">Speaking</a>
+      <a href="#media" data-page="media">Media</a>
+      <a href="#contact" data-page="contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-card">
+        <div class="hero-text">
+          <p class="job-title">Professor of Economics</p>
+          <p class="affil-line"><span class="mark">Department of Economics, University of Sussex</span><br><span class="mark">and Centre for Economic Performance, London School of Economics</span></p>
+        </div>
+        <img class="hero-photo" src="data:image/jpeg;base64,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" alt="Shqiponja Telhaj">
+      </div>
+    </div>
+  </header>
+
+  <!-- HOME PAGE: hero card + honour only -->
+  <div id="home" class="page">
+    <section id="about">
+      <div class="wrap prose" style="padding-top:8px;">
+        <div class="badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c2 2.5 2 5 0 8-2-3-2-5.5 0-8Z"/><path d="M12 11c3 1 5.5 3.5 6 7-4 .5-6.5-1.5-8-4"/><path d="M12 11c-3 1-5.5 3.5-6 7 4 .5 6.5-1.5 8-4"/><path d="M12 18v3"/></svg>
+          Knight of the Order of the Academic Oak &mdash; conferred by the President of Albania, April 2026
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- RESEARCH -->
+  <section id="research" class="page">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Research</h2>
+        <p>Refereed articles, book chapters, reports and working papers, spanning the economics of education, labour markets, and religion and social norms.</p>
+      </div>
+
+      <div class="pub-group">
+        <h3>Refereed articles</h3>
+
+        <div class="pub"><span class="cite">&ldquo;The impact of subjective school ratings on principal compensation and turnover,&rdquo; <em>Journal of Public Economics</em>, Volume 253, 105524, <span class="yr">2026</span> (with Iftikhar Hussain and Vincenzo Scrutinio). <a href="https://www.sciencedirect.com/science/article/pii/S0047272725002233" target="_blank" rel="noopener">DOI</a></span></div>
+
+        <div class="pub"><span class="cite">&ldquo;Teacher turnover: Effects, mechanisms and organisational responses,&rdquo; <em>Labour Economics</em>, 73, <span class="yr">2021</span> (with S.&nbsp;Gibbons and V.&nbsp;Scrutinio). <a href="https://doi.org/10.1016/j.labeco.2021.102079" target="_blank" rel="noopener">DOI</a></span></div>
+
+        <div class="pub"><span class="cite">&ldquo;Do Social Interactions in the Classroom Improve Academic Attainment?&rdquo; <em>IZA World of Labor</em>, 440, <span class="yr">2018</span>.</span></div>
+
+        <div class="pub"><span class="cite">&ldquo;Peer Effects and Pupil Attainment: Evidence from Secondary School Transition,&rdquo; <em>Oxford Bulletin of Economics and Statistics</em>, 78(4): 548&ndash;575, <span class="yr">2016</span> (with Steve Gibbons).</span>
+          <ul class="impact">
+            <li>In the top 25% of all research outputs scored by Altmetric</li>
+            <li>Discussed in the Commons&rsquo; Select Committee on School Diversity</li>
+            <li>Featured on BBC News, The Guardian, The Times, Daily Telegraph, Evening Standard, etc.</li>
+          </ul>
+        </div>
+
+        <div class="pub"><span class="cite">&ldquo;Does degree class matter? Graduate earnings and student achievement in UK universities,&rdquo; <em>Oxford Economic Papers</em>, 68(2): 525&ndash;545, <span class="yr">2015</span> (with Robin Naylor and Jeremy Smith).</span>
+          <ul class="impact"><li>Featured in the Observer, BBC News, The Telegraph, Daily Mail, etc.</li></ul>
+        </div>
+
+        <div class="pub"><span class="cite">&ldquo;Non-Native Speakers of English In The Classroom: What Are The Effects On Pupil Performance?&rdquo; <em>The Economic Journal</em>, 123(570): 281&ndash;307, <span class="yr">2013</span> (with Sandra McNally and Charlotte Geay).</span>
+          <ul class="impact">
+            <li>LSE CentrePiece version downloaded ~40,000 times; VoxEU version read 40,000+ times</li>
+            <li>In the top 5% of all research outputs scored by Altmetric; cited in the OECD's <em>International Migration Outlook</em> and <em>Handbook of the Economics of International Migration</em></li>
+            <li>Featured in the Financial Times, The Guardian, BBC News, Daily Telegraph, Huffington Post, etc.</li>
+          </ul>
+        </div>
+
+        <div class="pub"><span class="cite">&ldquo;Innovation Activities and Competitiveness: Empirical Evidence on the Behaviour of Firms in the New EU Member States and Candidate Countries,&rdquo; <em>Eastern European Economics</em>, 51(4): 84&ndash;107, <span class="yr">2013</span> (with Iraj Hashi and Nebojsa Stojcic).</span></div>
+
+        <div class="pub"><span class="cite">&ldquo;Pupil mobility and school disruption,&rdquo; <em>Journal of Public Economics</em>, 95(9&ndash;10): 1156&ndash;1167, <span class="yr">2011</span> (with Steve Gibbons).</span></div>
+
+        <div class="pub"><span class="cite">&ldquo;Competition, Cream-skimming and Departmental Performance within Secondary Schools,&rdquo; <em>British Educational Research Journal</em>, 35(1): 65&ndash;81, <span class="yr">2009</span> (with P.&nbsp;Davies, N.&nbsp;Adnett, R.&nbsp;Coe and D.&nbsp;Hutton).</span></div>
+
+        <div class="pub"><span class="cite">&ldquo;Increasing Within-School Competition: A Case for Department Level Performance Indicators?&rdquo; <em>Research Papers in Education</em>, 24(1): 45&ndash;55, <span class="yr">2009</span> (with N.&nbsp;Adnett, P.&nbsp;Davies, R.&nbsp;Coe and D.&nbsp;Hutton).</span></div>
+
+        <div class="pub"><span class="cite">&ldquo;Faith schools, social capital and academic attainment: evidence from TIMSS-R mathematics scores in Flemish secondary schools,&rdquo; <em>British Educational Research Journal</em>, 1&ndash;33, <span class="yr">2008</span> (with G.&nbsp;Pugh).</span></div>
+
+        <div class="pub"><span class="cite">&ldquo;Are Schools Drifting Apart? Intake Stratification in English Secondary Schools,&rdquo; <em>Urban Studies</em>, 44(7), <span class="yr">2007</span> (with Steve Gibbons).</span>
+          <ul class="impact"><li>Featured in the ESRC Annual Magazine (2008) and discussed in the Commons Select Committee on School Diversity</li></ul>
+        </div>
+
+        <div class="pub"><span class="cite">&ldquo;The Mobility of English School Children,&rdquo; <em>Fiscal Studies</em>, 27(3): 253&ndash;280, <span class="yr">2006</span>, lead article (with Steve Machin and Joan Wilson).</span></div>
+
+        <div class="pub"><span class="cite">&ldquo;Bold, Reckless and Adaptable? Gender differences in economic thinking and attitudes,&rdquo; <em>British Educational Research Journal</em>, 31(1): 29&ndash;48, <span class="yr">2005</span> (with P.&nbsp;Davies and J.&nbsp;Mangan).</span></div>
+
+        <div class="pub"><span class="cite">&ldquo;Economic aspects of citizenship education: an investigation of students&rsquo; understanding,&rdquo; <em>Curriculum Journal</em>, 13(2): 227&ndash;249, <span class="yr">2002</span> (with P.&nbsp;Davies, H.&nbsp;Howie and J.&nbsp;Mangan).</span></div>
+
+        <div class="pub"><span class="cite">&ldquo;Legal, Fiscal and Environmental Barriers to the Entry of New Local Firms in Albania,&rdquo; <em>Economics and Transition</em>, 4(26): 97&ndash;108, <span class="yr">2001</span> (in Albanian).</span></div>
+      </div>
+
+      <div class="pub-group">
+        <h3>Under revision</h3>
+        <div class="pub"><span class="cite">&ldquo;School Management Takeover, Leadership Change, and Personnel Policy,&rdquo; <em>American Economic Journal: Economic Policy</em> &mdash; revise &amp; resubmit (with Emma Duchini, Victor Lavy and Steve Machin). <a href="https://www.nber.org/papers/w31994" target="_blank" rel="noopener">NBER working paper</a></span></div>
+        <div class="pub"><span class="cite">&ldquo;Leadership wages and performance in schools,&rdquo; <em>Journal of Political Economy: Micro</em> &mdash; revise &amp; resubmit (with Tim Besley and Steve Machin).</span></div>
+      </div>
+
+      <div class="pub-group">
+        <h3>Book chapters</h3>
+        <div class="pub"><span class="cite">&ldquo;Barriers to Entry and Their Impact on Local Firms&rsquo; Performance in Albania,&rdquo; in Balcerowicz, E., Balcerowicz, L. and Hashi, I. (eds.), <em>Barriers to Entry in Early Transition</em>, NY: Kluwer Publishers, <span class="yr">2003</span> (with Lindita Xhillari).</span></div>
+      </div>
+
+      <details>
+        <summary><span class="chev">&#9656;</span> Reports, discussion papers &amp; other publications</summary>
+        <div style="margin-top:16px;">
+          <div class="pub"><span class="cite">&ldquo;The Quality of Higher Education Institutions and Their Study Programmes in Albania: Trends Over Time,&rdquo; <span class="yr">Oct. 2024</span> (with Iraj Hashi et al.).</span></div>
+          <div class="pub"><span class="cite">&ldquo;The Rise of the &lsquo;Super Head&rsquo; &mdash; Salary Differentials and Academy Schools,&rdquo; <span class="yr">2021</span> (with Steve Machin and Andy Eyles).</span></div>
+          <div class="pub"><span class="cite">&ldquo;An independent evaluation of Uni Connect&rsquo;s impact on intermediate outcomes for learners,&rdquo; Report for the Office for Students, <span class="yr">2021</span>.</span></div>
+          <div class="pub"><span class="cite">&ldquo;Teacher Turnover: Does it matter for student performance?&rdquo; CEP Discussion Paper 1530, <span class="yr">2018</span> (with Steve Gibbons and Vincenzo Scrutinio).</span></div>
+          <div class="pub"><span class="cite">&ldquo;Does teacher turnover affect young people&rsquo;s academic achievement?&rdquo; <em>CentrePiece</em>, Spring <span class="yr">2017</span> (with Steve Gibbons and Vincenzo Scrutinio).</span></div>
+          <div class="pub"><span class="cite">&ldquo;The rewards for getting a good degree,&rdquo; <em>CentrePiece</em>, Spring <span class="yr">2016</span> (with Robin Naylor and Jeremy Smith).</span></div>
+          <div class="pub"><span class="cite">&ldquo;Valuing the benefits of Student allocation funding,&rdquo; Report to HEFCE, CfE, <span class="yr">2015</span> (with Steve McIntosh).</span></div>
+          <div class="pub"><span class="cite">&ldquo;University quality and graduate wages in the UK,&rdquo; CEE/LSE Discussion Paper 99 and IZA Discussion Paper 4043, <span class="yr">2009</span> (with Sandra McNally and Ifty Hussain).</span>
+            <ul class="impact"><li>Cited as evidence to the Education Committee and the Innovation, Universities, Science and Skills Committee; quoted in the Russell Group's submission to the Browne Review</li></ul>
+          </div>
+          <div class="pub"><span class="cite">&ldquo;Educational Returns, Ability Composition, and cohort effects: theory and evidence for cohorts of early-career UK graduates,&rdquo; Warwick Economics Research Paper 906 / CEP Discussion Paper 939, <span class="yr">2009</span> (with N.J.&nbsp;Ireland, R.A.&nbsp;Naylor and J.P.&nbsp;Smith).</span></div>
+          <div class="pub"><span class="cite">&ldquo;Language barriers? The impact of non-native English speakers in the classroom,&rdquo; <em>VoxEU</em>, <span class="yr">2013</span> (with Sandra McNally and Charlotte Geay).</span></div>
+          <div class="pub"><span class="cite">&ldquo;Language barriers? The impact of non-native English speakers in the classroom,&rdquo; <em>CentrePiece</em>, Spring <span class="yr">2012</span> (with Charlotte Geay and Sandra McNally).</span>
+            <ul class="impact"><li>Over 50,000 downloads; featured in the Financial Times, BBC, The Guardian, Daily Telegraph, etc.</li></ul>
+          </div>
+          <div class="pub"><span class="cite">&ldquo;The Cost of Social Exclusion,&rdquo; Report to The Prince&rsquo;s Trust, Nov. <span class="yr">2010</span> (with Sandra McNally).</span></div>
+          <div class="pub"><span class="cite">&ldquo;Microeconometric Analysis of Household Awareness and Impact of Governance Reforms in Albania&rsquo;s Education Sector,&rdquo; Report to the World Bank, Dec. <span class="yr">2009</span>.</span></div>
+          <div class="pub"><span class="cite">&ldquo;University Quality and Graduate Wages in the UK,&rdquo; Report for TLRP, ESRC, <span class="yr">2008</span> (with Iftikhar Hussain and Sandra McNally).</span></div>
+          <div class="pub"><span class="cite">&ldquo;Are the Top Universities Worth Paying For?&rdquo; <em>CentrePiece</em>, <span class="yr">2008</span> (with Iftikhar Hussain and Sandra McNally).</span>
+            <ul class="impact"><li>Downloaded 20,000+ times; widely cited in the press and among policymakers</li></ul>
+          </div>
+          <div class="pub"><span class="cite">&ldquo;School Segregation and its Consequences,&rdquo; <em>CentrePiece</em>, Winter <span class="yr">2007/8</span> (with Steve Gibbons).</span></div>
+          <div class="pub"><span class="cite">&ldquo;Segregation at School,&rdquo; <em>ESRC Annual Magazine: Britain in 2008</em> (with Steve Gibbons).</span></div>
+          <div class="pub"><span class="cite">&ldquo;Value of Inclusion,&rdquo; Report for The Prince&rsquo;s Trust, July <span class="yr">2006</span> (with Sandra McNally).</span>
+            <ul class="impact"><li>Cited in Parliament's Committee on Economic Affairs (Fifth Report, 2007) and the Commons debate at Westminster, 24 April 2007</li></ul>
+          </div>
+          <div class="pub"><span class="cite">&ldquo;Within School Competition and Pupil Achievement,&rdquo; Report to ESRC, Dec. <span class="yr">2004</span> (with Nick Adnett, Peter Davies and Robert Coe).</span></div>
+        </div>
+      </details>
+
+      <div class="pub-group" style="margin-top:34px;">
+        <h3>Working papers</h3>
+        <div class="pub"><span class="cite">&ldquo;Losing Their Religion: State Prohibition of Religions, Social Norms, and Women's Participation&rdquo; (with Richard Murphy, UT Austin) &mdash; to be submitted soon.</span></div>
+        <div class="pub"><span class="cite">&ldquo;The Public Sector and the Misallocation of Labor: Evidence from a Policy Experiment in India,&rdquo; CEP Discussion Paper 1596, <span class="yr">2019</span> (with A.V.&nbsp;Chari et al.) &mdash; to be submitted soon.</span></div>
+      </div>
+
+      <div class="pub-group">
+        <h3>Work in progress</h3>
+        <div class="pub"><span class="cite">&ldquo;Can providing information about the benefits and costs of Higher Education to English secondary school students increase their HE participation?&rdquo; (mimeo)</span></div>
+        <div class="pub"><span class="cite">&ldquo;Autonomous schools and the teacher labour market,&rdquo; Nuffield-funded (with Steve Machin, Victor Lavy and Emma Duchini)</span></div>
+        <div class="pub"><span class="cite">&ldquo;Does head-teacher training improve student performance? Evidence from an intervention in England&rdquo; (with Vincenzo Scrutinio, mimeo)</span></div>
+        <div class="pub"><span class="cite">&ldquo;Compensating Differentials in education&rdquo; (with Esteban Aucejo, Arizona State, and Vincenzo Scrutinio)</span></div>
+        <div class="pub"><span class="cite">&ldquo;Gender pay gap and child penalty in the education sector&rdquo; (with Vincenzo Scrutinio)</span></div>
+      </div>
+
+      <h3 class="eyebrow" style="margin:34px 0 12px;">Recent grants</h3>
+      <ul class="tl">
+        <li><span class="when mono">2020&ndash;24</span><span class="what">&ldquo;Autonomous schools and the teacher labour market: Evidence from academies,&rdquo; Nuffield Foundation, &pound;139,182 <span class="sub">(with Victor Lavy, Emma Duchini and Stephen Machin)</span></span></li>
+        <li><span class="when mono">2014&ndash;18</span><span class="what">ESRC grant for &ldquo;Privatization and productivity growth,&rdquo; &pound;309,000 <span class="sub">(with A.V. Chari et al.)</span></span></li>
+        <li><span class="when mono">2016</span><span class="what">BMEc Research Development Fund, &ldquo;Does Religion affect Economic Prosperity? Evidence from a Ban on Religious expression in Albania&rdquo;</span></li>
+        <li><span class="when mono">2011&ndash;12</span><span class="what">Nuffield Foundation, &ldquo;Non-Native English Speakers in the Classroom,&rdquo; &pound;50,000 <span class="sub">(with Sandra McNally)</span></span></li>
+        <li><span class="when mono">2006&ndash;08</span><span class="what">ESRC, &ldquo;Equality of Access to Higher Education Institutions and Labour Market Returns,&rdquo; &pound;318,733 <span class="sub">(with Anna Vignoles and others)</span></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- POLICY -->
+  <section id="policy" class="page">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Policy</h2>
+        <p>Advisory and committee work translating research into policy, and public-facing writing on education and labour-market policy.</p>
+      </div>
+
+      <h3 class="eyebrow" style="margin-bottom:14px;">Policy advisory roles</h3>
+
+      <div class="policy-item">
+        <span class="yr mono">2021&ndash;25</span>
+        <div><span class="role">Chair, Higher Education Accreditation Board</span> &mdash; Quality Assurance Agency for Higher Education, Albania</div>
+      </div>
+      <div class="policy-item">
+        <span class="yr mono">2024</span>
+        <div><span class="role">Written evidence cited</span> in the House of Commons Education Committee report, &ldquo;Teacher recruitment, training and retention,&rdquo; Second Report of Session 2023&ndash;24. <a href="https://committees.parliament.uk/publications/44798/documents/222606/default/" target="_blank" rel="noopener">Read the report &rarr;</a></div>
+      </div>
+      <div class="policy-item">
+        <span class="yr mono">2023</span>
+        <div><span class="role">Written evidence submitted</span> to the UK Parliament: &ldquo;Teacher Turnover: Effects, mechanisms and organisational responses.&rdquo; <a href="https://committees.parliament.uk/writtenevidence/120427/pdf/" target="_blank" rel="noopener">Read the submission &rarr;</a></div>
+      </div>
+      <div class="policy-item">
+        <span class="yr mono">2017&ndash;18</span>
+        <div><span class="role">Member, Technical Advisory Group</span>, UK Department for Education &mdash; advice on teachers&rsquo; labour market policy</div>
+      </div>
+      <div class="policy-item">
+        <span class="yr mono">2017&ndash;21</span>
+        <div><span class="role">Advisor, Higher Education Funding Council for England</span> (HEFCE) &mdash; evaluating the National Collaborative Outreach Programme (NCOP)</div>
+      </div>
+      <div class="policy-item">
+        <span class="yr mono">2018</span>
+        <div><span class="role">Advisor, Ambition School Leadership Trust</span> &mdash; impact of head-teacher training on student achievement in disadvantaged areas</div>
+      </div>
+      <div class="policy-item">
+        <span class="yr mono">2015</span>
+        <div><span class="role">Advisor, HEFCE</span> &mdash; &ldquo;Valuing the benefits of university student allocation funding&rdquo;</div>
+      </div>
+      <div class="policy-item">
+        <span class="yr mono">2010</span>
+        <div><span class="role">Advisor, World Bank</span> &mdash; &ldquo;Impact of Governance Reforms in Albania&rsquo;s Education Sector&rdquo;</div>
+      </div>
+      <div class="policy-item">
+        <span class="yr mono">2006&ndash;10</span>
+        <div><span class="role">Advisor, The Prince&rsquo;s Trust</span> &mdash; &ldquo;The Cost of Social Exclusion&rdquo; and &ldquo;Value of Inclusion,&rdquo; on youth unemployment, crime and education in the UK</div>
+      </div>
+
+      <h3 class="eyebrow" style="margin:36px 0 14px;">Policy articles &amp; commentary</h3>
+
+      <h4 class="mono" style="font-size:0.82rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--ink-faint); margin:0 0 10px;">Teacher &amp; school labour markets</h4>
+      <ul class="link-list" style="margin-bottom:26px;">
+        <li>&ldquo;Does teacher turnover affect young people&rsquo;s academic achievement?&rdquo; <em>CentrePiece</em>, Spring 2017 <span class="sub" style="color:var(--ink-muted);">(with Steve Gibbons and Vincenzo Scrutinio)</span></li>
+        <li>&ldquo;The rewards for getting a good degree,&rdquo; <em>CentrePiece</em>, Spring 2016 <span class="sub" style="color:var(--ink-muted);">(with Robin Naylor and Jeremy Smith)</span></li>
+        <li>&ldquo;Language barriers? The impact of non-native English speakers in the classroom,&rdquo; <em>VoxEU</em>, 2013 <span class="sub" style="color:var(--ink-muted);">(with Sandra McNally and Charlotte Geay)</span></li>
+        <li>&ldquo;Language barriers? The impact of non-native English speakers in the classroom,&rdquo; <em>CentrePiece</em>, Spring 2012 <span class="sub" style="color:var(--ink-muted);">(with Charlotte Geay and Sandra McNally)</span></li>
+        <li>&ldquo;Are the Top Universities Worth Paying For?&rdquo; <em>CentrePiece</em>, 2008 <span class="sub" style="color:var(--ink-muted);">(with Iftikhar Hussain and Sandra McNally)</span></li>
+        <li>&ldquo;School Segregation and its Consequences,&rdquo; <em>CentrePiece</em>, Winter 2007/8 <span class="sub" style="color:var(--ink-muted);">(with Steve Gibbons)</span></li>
+      </ul>
+      <p style="color:var(--ink-muted); font-size:0.9rem;">Links to the original pieces to follow. Also written for <strong style="color:var(--ink);">LSE Business Review</strong>, <strong style="color:var(--ink);">LSE British Politics and Policy</strong>, and other outlets &mdash; send over titles and links and they'll be added here, grouped by topic, in the same style.</p>
+    </div>
+  </section>
+
+  <!-- HONOURS & SERVICE -->
+  <section id="honours" class="page">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Prizes, honours &amp; service</h2>
+      </div>
+
+      <div class="honour-item featured">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c2 2.5 2 5 0 8-2-3-2-5.5 0-8Z"/><path d="M12 11c3 1 5.5 3.5 6 7-4 .5-6.5-1.5-8-4"/><path d="M12 11c-3 1-5.5 3.5-6 7 4 .5 6.5-1.5 8-4"/><path d="M12 18v3"/></svg>
+        <div><span class="yr">APRIL 2026</span><strong>Knight of the Order of the Academic Oak</strong>, conferred by the President of Albania, for contributions to scientific research and to the design and advisory of public policy in Albania's education and economic sectors. <a href="https://www.sussex.ac.uk/broadcast/read/70575" target="_blank" rel="noopener">Read the announcement &rarr;</a></div>
+      </div>
+
+      <h3 class="eyebrow" style="margin:36px 0 14px;">Positions</h3>
+      <div class="grid-2" style="margin-bottom:36px;">
+        <div>
+          <h3 class="eyebrow" style="margin-bottom:12px; font-size:0.8rem;">Current</h3>
+          <ul class="tl">
+            <li><span class="when mono">2023&ndash;</span><span class="what"><strong>Professor of Economics</strong>, Department of Economics, University of Sussex</span></li>
+            <li><span class="when mono">2008&ndash;</span><span class="what"><strong>Research Associate</strong>, Centre for Economic Performance, LSE</span></li>
+            <li><span class="when mono">2021&ndash;25</span><span class="what"><strong>Chair</strong>, Higher Education Accreditation Board, Quality Assurance Agency for Higher Education, Albania &mdash; appointed by the Albanian Prime Minister</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="eyebrow" style="margin-bottom:12px; font-size:0.8rem;">Previous</h3>
+          <ul class="tl">
+            <li><span class="when mono">2017&ndash;22</span><span class="what">Reader (tenured Associate Professor), University of Sussex</span></li>
+            <li><span class="when mono">2017&ndash;18</span><span class="what">Member, Technical Advisory Group, UK Dept. for Education</span></li>
+            <li><span class="when mono">2015&ndash;17</span><span class="what">Senior Lecturer, University of Sussex</span></li>
+            <li><span class="when mono">2008&ndash;14</span><span class="what">Lecturer, University of Sussex</span></li>
+            <li><span class="when mono">2005&ndash;07</span><span class="what">Research Economist, CEP, LSE</span></li>
+            <li><span class="when mono">2004&ndash;05</span><span class="what">Research Assistant, CEP, LSE</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="honour-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c2 2.5 2 5 0 8-2-3-2-5.5 0-8Z"/><path d="M12 11c3 1 5.5 3.5 6 7-4 .5-6.5-1.5-8-4"/><path d="M12 11c-3 1-5.5 3.5-6 7 4 .5 6.5-1.5 8-4"/><path d="M12 18v3"/></svg>
+        <div><span class="yr">2025</span>Chair, HEI Quality Evaluation Team of Corvinus University, Budapest &mdash; invited by the Hungarian Higher Education Accreditation Board</div></div>
+
+      <div class="honour-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c2 2.5 2 5 0 8-2-3-2-5.5 0-8Z"/><path d="M12 11c3 1 5.5 3.5 6 7-4 .5-6.5-1.5-8-4"/><path d="M12 11c-3 1-5.5 3.5-6 7 4 .5 6.5-1.5 8-4"/><path d="M12 18v3"/></svg>
+        <div><span class="yr">OCT 2024 &ndash; MAR 2025</span>Coordinator, Albanian Higher Education Strategy Document 2025 &mdash; appointed by the Minister of Education; strategy launched at a high-level event alongside the Albanian Prime Minister, February 2025</div></div>
+
+      <div class="honour-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c2 2.5 2 5 0 8-2-3-2-5.5 0-8Z"/><path d="M12 11c3 1 5.5 3.5 6 7-4 .5-6.5-1.5-8-4"/><path d="M12 11c-3 1-5.5 3.5-6 7 4 .5 6.5-1.5 8-4"/><path d="M12 18v3"/></svg>
+        <div><span class="yr">2021&ndash;present</span>International Selection Committee Member for Academic Hiring in Catalonia, Spain &mdash; Serra H&uacute;nter Programme</div></div>
+
+      <div class="honour-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c2 2.5 2 5 0 8-2-3-2-5.5 0-8Z"/><path d="M12 11c3 1 5.5 3.5 6 7-4 .5-6.5-1.5-8-4"/><path d="M12 11c-3 1-5.5 3.5-6 7 4 .5 6.5-1.5 8-4"/><path d="M12 18v3"/></svg>
+        <div><span class="yr">2016&ndash;present</span>Editorial Board Member, <em>Ekonomski pregled</em> &mdash; one of the oldest South-Eastern European social sciences journals</div></div>
+
+      <div class="honour-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c2 2.5 2 5 0 8-2-3-2-5.5 0-8Z"/><path d="M12 11c3 1 5.5 3.5 6 7-4 .5-6.5-1.5-8-4"/><path d="M12 11c-3 1-5.5 3.5-6 7 4 .5 6.5-1.5 8-4"/><path d="M12 18v3"/></svg>
+        <div><span class="yr">2015&ndash;present</span>Member, Economics of Higher Education Network</div></div>
+
+      <div class="honour-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c2 2.5 2 5 0 8-2-3-2-5.5 0-8Z"/><path d="M12 11c3 1 5.5 3.5 6 7-4 .5-6.5-1.5-8-4"/><path d="M12 11c-3 1-5.5 3.5-6 7 4 .5 6.5-1.5 8-4"/><path d="M12 18v3"/></svg>
+        <div><span class="yr">2014&ndash;present</span>Editorial Board Member, <em>Economic Thought and Practice</em> (Economics and Social Policy journal)</div></div>
+
+      <div class="honour-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c2 2.5 2 5 0 8-2-3-2-5.5 0-8Z"/><path d="M12 11c3 1 5.5 3.5 6 7-4 .5-6.5-1.5-8-4"/><path d="M12 11c-3 1-5.5 3.5-6 7 4 .5 6.5-1.5 8-4"/><path d="M12 18v3"/></svg>
+        <div><span class="yr">2013&ndash;16</span>Scientific Programme Committee Member, Royal Economic Society Annual Conference, UK</div></div>
+
+      <div class="honour-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c2 2.5 2 5 0 8-2-3-2-5.5 0-8Z"/><path d="M12 11c3 1 5.5 3.5 6 7-4 .5-6.5-1.5-8-4"/><path d="M12 11c-3 1-5.5 3.5-6 7 4 .5 6.5-1.5 8-4"/><path d="M12 18v3"/></svg>
+        <div><span class="yr">2016</span>Programme Committee Member &amp; Moderator, 1st International Conference on &ldquo;Smart Ideas and a New Concept of Economic Regeneration in Europe,&rdquo; Dubrovnik, Croatia</div></div>
+
+      <h3 class="eyebrow" style="margin:36px 0 14px;">Academic &amp; professional memberships</h3>
+      <div class="tag-cloud">
+        <span class="tag">Albanian National Economic Council</span>
+        <span class="tag">Royal Economic Society</span>
+        <span class="tag">European Association of Labour Economists</span>
+        <span class="tag">European Economic Association</span>
+        <span class="tag">Centre for the Economics of Education, LSE</span>
+        <span class="tag">The Economics of Education and Education Policy in Europe Network</span>
+      </div>
+
+      <h3 class="eyebrow" style="margin:36px 0 14px;">Department, university &amp; sector service</h3>
+      <ul class="tl">
+        <li><span class="when mono">2023&ndash;</span><span class="what">Member, Leadership Team, Economics Department, Sussex</span></li>
+        <li><span class="when mono">2022&ndash;</span><span class="what">Director, Centre for Study of Welfare and Inclusive Growth, Sussex</span></li>
+        <li><span class="when mono">2020&ndash;23</span><span class="what">Director of Research and Knowledge Exchange, Dept. of Economics, Sussex</span></li>
+        <li><span class="when mono">2013&ndash;15</span><span class="what">Organiser, weekly external Seminar Series, Economics Dept., Sussex</span></li>
+        <li><span class="when mono">2012&ndash;14</span><span class="what">Organiser, weekly internal Seminar Series, Economics Dept., Sussex</span></li>
+        <li><span class="when mono">2010&ndash;</span><span class="what">Member, yearly recruitment/screening panel for lectureships, Economics Dept.</span></li>
+      </ul>
+
+      <h3 class="eyebrow" style="margin:36px 0 14px;">Peer review</h3>
+      <p style="color:var(--ink-muted); margin-bottom:6px;"><strong style="color:var(--ink);">Grant panels:</strong> ESRC, Nuffield Foundation, Austrian Science Fund</p>
+      <p style="color:var(--ink-muted);"><strong style="color:var(--ink);">Journals:</strong> Journal of Applied Econometrics, Economica, Economic Journal, Economics of Education Review, Education Economics, Empirical Economics, Fiscal Studies, International Review of Economics Education, Higher Education Quarterly, Journal of Human Resources, Journal of Public Economics, Journal of the Royal Statistical Society (A), Journal of Regional Science, Labour Economics, Oxford Bulletin of Economics and Statistics, Oxford Economic Papers, Scandinavian Journal of Economics, The B.E. Journal of Economic Analysis and Policy</p>
+    </div>
+  </section>
+
+  <!-- TEACHING -->
+  <section id="teaching" class="page">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Teaching &amp; supervision</h2>
+      </div>
+
+      <h3 class="eyebrow" style="margin-bottom:14px;">Teaching &amp; doctoral roles</h3>
+      <ul class="tl">
+        <li><span class="when mono">2017&ndash;18</span><span class="what">Director of Doctoral Studies, School of Business, Management and Economics, Sussex</span></li>
+        <li><span class="when mono">2017&ndash;18</span><span class="what">Member, University Doctoral Studies Committee, Sussex</span></li>
+        <li><span class="when mono">2014&ndash;17</span><span class="what">Convenor, MSc in International Finance, Sussex</span></li>
+        <li><span class="when mono">2014&ndash;15</span><span class="what">Convenor, &ldquo;Introduction to Quantitative Methods,&rdquo; University Doctoral School, Sussex</span></li>
+        <li><span class="when mono">2007&ndash;08</span><span class="what">Member, Teaching Committee, Department of Economics, Sussex</span></li>
+      </ul>
+
+      <h3 class="eyebrow" style="margin:34px 0 14px;">PhD supervision</h3>
+      <ul class="tl">
+        <li><span class="when mono">2024&ndash;</span><span class="what">Fernando Rowland <span class="sub">&mdash; in progress</span></span></li>
+        <li><span class="when mono">2023&ndash;</span><span class="what">Gabriela Villalba Marecos <span class="sub">&mdash; in progress</span></span></li>
+        <li><span class="when mono">2022&ndash;</span><span class="what">Jinchi Dong <span class="sub">&mdash; in progress</span></span></li>
+        <li><span class="when mono">2018&ndash;22</span><span class="what">Fjolla Kondirolli <span class="sub">&mdash; &ldquo;Essays on Labour Market&rdquo;; first post: LSE</span></span></li>
+        <li><span class="when mono">2017&ndash;21</span><span class="what">Diego de la Fuente <span class="sub">&mdash; &ldquo;Essays on the impact of remittances on crime&rdquo;; first post: Institute of Development Studies</span></span></li>
+        <li><span class="when mono">2012&ndash;16</span><span class="what">Francisco Cabrera <span class="sub">&mdash; first post: CIDE, Mexico</span></span></li>
+        <li><span class="when mono">2012&ndash;15</span><span class="what">Pedro Orraca <span class="sub">&mdash; first post: Universidad Aut&oacute;noma de Baja California</span></span></li>
+      </ul>
+      <p style="color:var(--ink-muted); font-size:0.9rem; margin-top:6px;">Also supervises 4&ndash;6 MSc and BSc dissertations per year, on average.</p>
+
+      <h3 class="eyebrow" style="margin:34px 0 14px;">External examining</h3>
+      <div class="tag-cloud">
+        <span class="tag mono">2025 &middot; LSE (PhD)</span>
+        <span class="tag mono">2021 &middot; Sussex (Viva Chair)</span>
+        <span class="tag mono">2015 &middot; Sussex (PhD)</span>
+        <span class="tag mono">2014 &middot; Queen Mary (PhD)</span>
+        <span class="tag mono">2013&ndash;17 &middot; UCL Institute of Education (MSc)</span>
+        <span class="tag mono">2013 &middot; Royal Holloway (PhD)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPEAKING -->
+  <section id="speaking" class="page">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Speaking</h2>
+        <p>Keynotes and invited talks across Europe and North America.</p>
+      </div>
+
+      <h3 class="eyebrow" style="margin-bottom:14px;">Recent keynotes</h3>
+      <ul class="tl">
+        <li><span class="when mono">2025</span><span class="what">Keynote panel speaker, <strong>High-Level Launch of Albania's Higher Education Strategy 2025</strong> &mdash; alongside the Albanian Prime Minister and Minister of Education</span></li>
+        <li><span class="when mono">2025</span><span class="what">Keynote panel speaker, Riinvest Research Institute 30th anniversary conference, &ldquo;Activating the sources of economic growth&rdquo;</span></li>
+        <li><span class="when mono">2022</span><span class="what">Keynote speaker &amp; panelist, European Commission workshop, &ldquo;Gender Equality and Balance in Decision Making Bodies in Research Organisations&rdquo;</span></li>
+        <li><span class="when mono">2019</span><span class="what">Invited lecture, UK Department for Education, Learning and Development Event Series</span></li>
+        <li><span class="when mono">2018</span><span class="what">Keynote speaker, Economics PhD Conference, Royal Holloway, University of London</span></li>
+        <li><span class="when mono">2018</span><span class="what">Key panel member, Royal Economic Society public event, &ldquo;What's the Point of University?&rdquo;</span></li>
+        <li><span class="when mono">2017</span><span class="what">Plenary chair/moderator on industrial policy, with ministers from Central and South-Eastern Europe &mdash; Dubrovnik conference</span></li>
+        <li><span class="when mono">2016</span><span class="what">Keynote speaker &amp; plenary panelist, Albanian Diaspora Conference, on the Albanian economy</span></li>
+      </ul>
+
+      <details style="margin-top:8px;">
+        <summary><span class="chev">&#9656;</span> Invited seminars &amp; conferences (selected)</summary>
+        <div class="seminar-list">
+          <p><strong>Oxford</strong> &mdash; Political Economy Seminar, June 2025</p>
+          <p><strong>Bristol</strong> &mdash; scheduled, October 2025</p>
+          <p><strong>UCL</strong>, Faculty of Education and Society &mdash; March 2025</p>
+          <p><strong>NTNU</strong>, Norway &mdash; October 2024</p>
+          <p><strong>Zurich</strong> &mdash; scheduled, December 2022</p>
+          <p><strong>Bath</strong> &mdash; scheduled, October 2022</p>
+          <p><strong>St Andrews</strong> &mdash; 2020</p>
+          <p><strong>LSE</strong>, CEP &mdash; 2019</p>
+          <p><strong>UCL</strong> Institute of Education &mdash; 2019</p>
+          <p><strong>Padua</strong>, Italy &mdash; 2019</p>
+          <p><strong>Lausanne</strong>, Switzerland &mdash; 2019</p>
+          <p><strong>Luxembourg</strong> &mdash; April 2019</p>
+          <p><strong>Aberdeen</strong> &mdash; November 2018</p>
+          <p><strong>CUNY</strong> Graduate Center &mdash; October 2018</p>
+          <p><strong>Birkbeck</strong>, London &mdash; May 2018</p>
+          <p><strong>European Commission</strong>, CRELL &mdash; 2018</p>
+          <p><strong>IWAEE</strong> Annual Workshop, Catanzaro &mdash; 2017, 2018, 2019, 2022</p>
+          <p><strong>EALE</strong> Conference, Lyon &mdash; September 2018</p>
+          <p><strong>European ASREC</strong>, Luxembourg &mdash; June 2018</p>
+          <p><strong>International ASREC</strong>, Chapman University &mdash; March 2018</p>
+          <p><strong>Milan</strong>, Workshop on Labour Economics &mdash; December 2017</p>
+          <p><strong>LSE</strong>, Employee &amp; Stakeholder Influence on Boardroom Pay &mdash; February 2017</p>
+          <p><strong>Zurich</strong>, Colloquium on Personnel Economics &mdash; February 2017</p>
+          <p><strong>Split</strong>, Croatia &mdash; June 2017</p>
+          <p><strong>York</strong>, Workshop on Labour and Family Economics &mdash; September 2016</p>
+          <p><strong>NTNU</strong>, Trondheim &mdash; May 2016</p>
+          <p><strong>LSE</strong>, Centre for the Economics of Education &mdash; February 2016</p>
+          <p><strong>Columbia</strong>, Teachers College &mdash; July 2015</p>
+          <p><strong>Maastricht</strong> &mdash; 2015</p>
+          <p><strong>Bristol</strong>, CMPO &mdash; 2015</p>
+          <p><strong>Padua</strong> &mdash; 2015</p>
+          <p><strong>NIESR</strong>, London &mdash; 2015</p>
+          <p><strong>UCL</strong> Institute of Education &mdash; 2015</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- MEDIA -->
+  <section id="media" class="page">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Media</h2>
+        <p>Research covered widely in national and international press. Send along direct links to specific pieces and they'll be added below.</p>
+      </div>
+
+      <h3 class="eyebrow" style="margin-bottom:14px;">Press, radio &amp; television</h3>
+      <p style="color:var(--ink-muted);">Research has been featured in the Financial Times, BBC News, BBC Radio 4 Today Programme, BBC World Service, The Guardian, The Observer, Huffington Post, Times Education Supplement, The Independent, The Times, Daily Telegraph, Daily Mail, Evening Standard, and further UK regional and international outlets.</p>
+      <details>
+        <summary><span class="chev">&#9656;</span> Full list of press outlets</summary>
+        <div class="tag-cloud">
+          <span class="tag">Financial Times</span><span class="tag">BBC News</span><span class="tag">BBC Radio 4 Today</span><span class="tag">BBC World Service</span><span class="tag">The Guardian</span><span class="tag">The Observer</span><span class="tag">Huffington Post</span><span class="tag">Times Education Supplement</span><span class="tag">The Independent</span><span class="tag">The Times</span><span class="tag">Daily Telegraph</span><span class="tag">Sunday Telegraph</span><span class="tag">Daily Mail</span><span class="tag">Evening Chronicle</span><span class="tag">The Sun</span><span class="tag">Student Times</span><span class="tag">Western Morning News</span><span class="tag">Daily Record</span><span class="tag">Herald</span><span class="tag">Focus</span><span class="tag">Evening Standard</span><span class="tag">Belfast Telegraph</span><span class="tag">Aberdeen Press and Journal</span><span class="tag">Glasgow Evening Times</span><span class="tag">Unison</span><span class="tag">This is Money</span><span class="tag">Scotland Courier</span><span class="tag">Further Education News</span><span class="tag">Express and Echo</span><span class="tag">Career Engineer</span><span class="tag">Women in Technology</span><span class="tag">London Digest</span>
+        </div>
+        <p style="color:var(--ink-muted); font-size:0.88rem; margin-top:10px;">Also featured in the Polish, Albanian and other foreign press.</p>
+      </details>
+
+      <h3 class="eyebrow" style="margin:34px 0 14px;">Radio &amp; TV interviews</h3>
+      <ul class="tl">
+        <li><span class="when mono">2022</span><span class="what">Albanian TV Klan &mdash; &ldquo;Opinion&rdquo; economic-political programme (also April 2021)</span></li>
+        <li><span class="when mono">2021</span><span class="what">Dritare TV &mdash; &ldquo;Shqip&rdquo; programme, Albania</span></li>
+        <li><span class="when mono">&mdash;</span><span class="what">UK SkyNews; LBC Radio, London; BBC World Service Main News (morning programme, Economics Forum)</span></li>
+      </ul>
+
+      <h3 class="eyebrow" style="margin:34px 0 14px;">Video &amp; broadcast contributions</h3>
+      <ul class="link-list">
+        <li><a href="https://www.youtube.com/watch?v=U1totxQgKeY&t=4s" target="_blank" rel="noopener">IZA World of Labour &mdash; discussion on the Economics of Education</a> <span class="sub" style="color:var(--ink-muted);">with Dan Hamermesh (UT Austin), Eric Taylor (Harvard) and John Friedman (Brown), 2023</span></li>
+        <li><a href="https://www.youtube.com/watch?v=hR4_O5jzxbw" target="_blank" rel="noopener">&ldquo;Is it worth going to University?&rdquo;</a> <span class="sub" style="color:var(--ink-muted);">Royal Economic Society YouTube series, 2018</span></li>
+        <li><a href="https://www.youtube.com/watch?v=joPlLhhrhkk" target="_blank" rel="noopener">&ldquo;Why mixing with bright kids is good for learning and why it pays to study hard at university&rdquo;</a> <span class="sub" style="color:var(--ink-muted);">Royal Economic Society YouTube series, 2018</span></li>
+      </ul>
+
+      <h3 class="eyebrow" style="margin:34px 0 14px;">Blogs &amp; networks</h3>
+      <div class="tag-cloud">
+        <span class="tag">VoxEU / CEPR</span><span class="tag">LSE Business Review</span><span class="tag">The Conversation UK</span><span class="tag">LSE British Politics and Policy</span><span class="tag">Adam Smith Institute blog</span><span class="tag">Discovery Graduates blog</span><span class="tag">Economics of Higher Education Network</span><span class="tag">The Young Fabian blog</span><span class="tag">My Science Network</span><span class="tag">Public Finance magazine</span><span class="tag">ESRC Annual Magazine</span><span class="tag">CentrePiece (CEP, LSE)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="page">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Contact</h2>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="eyebrow" style="margin-bottom:10px;">University of Sussex</h3>
+          <p style="margin:0;">Department of Economics<br>Room 277, Jubilee Building<br>Falmer, Brighton BN1 9RH</p>
+          <p style="margin-top:10px;"><a href="mailto:S.Telhaj@sussex.ac.uk">S.Telhaj@sussex.ac.uk</a></p>
+          <p style="margin-top:10px;"><a href="https://profiles.sussex.ac.uk/p213773-shqiponja-telhaj" target="_blank" rel="noopener">Sussex profile &rarr;</a></p>
+        </div>
+        <div class="card">
+          <h3 class="eyebrow" style="margin-bottom:10px;">London School of Economics</h3>
+          <p style="margin:0;">Centre for Economic Performance<br>Room 2.05, Lincoln&rsquo;s Inn Fields Building<br>Houghton Street, London WC2A 2AE</p>
+          <p style="margin-top:10px;"><a href="mailto:S.Telhaj@lse.ac.uk">S.Telhaj@lse.ac.uk</a></p>
+          <p style="margin-top:10px;"><a href="https://cep.lse.ac.uk/_new/people/person.asp?id=2221" target="_blank" rel="noopener">CEP profile &rarr;</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; Shqiponja Telhaj</span>
+    <span>Department of Economics, University of Sussex &middot; Centre for Economic Performance, LSE</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var pages = ['home','research','policy','honours','teaching','speaking','media','contact'];
+    function showPage(id){
+      if (pages.indexOf(id) === -1) id = 'home';
+      pages.forEach(function(p){
+        var el = document.getElementById(p);
+        if (el) el.classList.toggle('active', p === id);
+      });
+      document.querySelectorAll('.navlinks a').forEach(function(a){
+        a.classList.toggle('active', a.getAttribute('data-page') === id);
+      });
+      window.scrollTo(0, 0);
+    }
+    function fromHash(){
+      var id = (location.hash || '#home').replace('#','');
+      showPage(id);
+    }
+    window.addEventListener('hashchange', fromHash);
+    fromHash();
+  })();
+</script>
+
+</body>
+</html>
