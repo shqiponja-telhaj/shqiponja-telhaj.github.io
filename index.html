@@ -316,7 +316,7 @@
       <a href="#policy" data-page="policy">Policy</a>
       <a href="#honours" data-page="honours">Honours &amp; Service</a>
       <a href="#teaching" data-page="teaching">Teaching</a>
-      <a href="#speaking" data-page="speaking">Speaking</a>
+      <a href="#speaking" data-page="speaking">Keynotes &amp; Talks</a>
       <a href="#media" data-page="media">Media</a>
       <a href="#contact" data-page="contact">Contact</a>
     </div>
@@ -671,7 +671,7 @@
   <section id="speaking" class="page">
     <div class="wrap">
       <div class="section-head">
-        <h2>Speaking</h2>
+        <h2>Keynotes &amp; Talks</h2>
         <p>Keynotes and invited talks across Europe and North America.</p>
       </div>
 
@@ -811,7 +811,16 @@
       document.querySelectorAll('.navlinks a').forEach(function(a){
         a.classList.toggle('active', a.getAttribute('data-page') === id);
       });
-      window.scrollTo(0, 0);
+      if (id === 'home') {
+        window.scrollTo(0, 0);
+      } else {
+        // land directly on the chosen section, just below the sticky nav
+        var target = document.getElementById(id);
+        var nav = document.querySelector('.topnav');
+        var offset = nav ? nav.offsetHeight : 0;
+        var y = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo(0, Math.max(0, y));
+      }
     }
     function fromHash(){
       var id = (location.hash || '#home').replace('#','');
